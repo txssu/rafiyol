@@ -1,0 +1,40 @@
+<h1>Listing Decks</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.deck_index_path(@socket, :index)}>
+    <.live_component
+      module={RafiyolWeb.DeckLive.FormComponent}
+      id={@deck.id || :new}
+      title={@page_title}
+      action={@live_action}
+      deck={@deck}
+      user={@user}
+      return_to={Routes.deck_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table class="table w-full table-zebra">
+  <thead>
+    <tr>
+      <th>Name</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="decks">
+    <%= for deck <- @decks do %>
+      <tr id={"deck-#{deck.id}"}>
+        <td><h3><%= deck.name %></h3></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.deck_show_path(@socket, :show, deck), class: "btn" %></span>
+          <span><%= live_patch "Edit", to: Routes.deck_index_path(@socket, :edit, deck), class: "btn" %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: deck.id, data: [confirm: "Are you sure?"], class: "btn" %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Deck", to: Routes.deck_index_path(@socket, :new), class: "btn btn-primary" %></span>

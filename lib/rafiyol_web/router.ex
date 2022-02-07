@@ -44,6 +44,17 @@ defmodule RafiyolWeb.Router do
     end
   end
 
+  scope "/decks", RafiyolWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    live "/", DeckLive.Index, :index
+    live "/new", DeckLive.Index, :new
+    live "/:id/edit", DeckLive.Index, :edit
+
+    live "/:id", DeckLive.Show, :show
+    live "/:id/show/edit", DeckLive.Show, :edit
+  end
+
   ## Authentication routes
 
   scope "/", RafiyolWeb do
