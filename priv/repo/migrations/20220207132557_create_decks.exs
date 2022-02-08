@@ -9,7 +9,6 @@ defmodule Rafiyol.Repo.Migrations.CreateDecks do
       timestamps()
     end
 
-    create unique_index(:decks, [:name])
     create index(:decks, [:owner_id])
   end
 end

@@ -14,7 +14,6 @@ defmodule Rafiyol.Decks.Deck do
     deck
     |> cast(attrs, [:name])
     |> validate_required([:name])
-    |> unique_constraint(:name)
   end
 
   @doc false
